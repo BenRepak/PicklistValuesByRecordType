@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Get Picklist by Record Type</masterLabel>
+    <description>This component will display the values for the picklist of a specified record type.</description>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="fieldApiName" label="Field API Name" type="String" required="true" role="inputOnly" default="Industry"/>
+            <property name="objApiName" label="Object API Name" type="String" required="true" role="inputOnly" default="Account"/>
+            <property name="recTypeId" label="Record Type Id" type="String" required="true" role="inputOnly" default="insert recordTypeId here"/>
+            <property name="outputValue" label="Selected Picklist Value" type="String" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
