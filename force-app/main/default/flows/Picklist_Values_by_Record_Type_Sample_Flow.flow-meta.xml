@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <description>A sample flow that shows how to use a custom LWC component to display picklist values based on record type. This flow uses the Account object and Industry field.</description>
+    <dynamicChoiceSets>
+        <name>picklistChoiceSetIndustry</name>
+        <dataType>Picklist</dataType>
+        <displayField xsi:nil="true"/>
+        <object xsi:nil="true"/>
+        <picklistField>Industry</picklistField>
+        <picklistObject>Account</picklistObject>
+    </dynamicChoiceSets>
     <interviewLabel>Picklist Values by Record Type Sample Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Picklist Values by Record Type Sample Flow</label>
     <processMetadataValues>
@@ -61,7 +69,7 @@
         <name>Display_Account_and_Industry_Picklist</name>
         <label>Display Account and Industry Picklist</label>
         <locationX>811</locationX>
-        <locationY>118</locationY>
+        <locationY>116</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -74,15 +82,22 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>getIndustryPicklistValues</name>
+            <name>displayAction</name>
+            <fieldText>&lt;p&gt;Change the picklist below to conditionally render display text elements. &lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Flow_Picklist</name>
+            <choiceReferences>picklistChoiceSetIndustry</choiceReferences>
+            <dataType>String</dataType>
+            <fieldText>Industry Picklist Choice Set From Flow</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+        </fields>
+        <fields>
+            <name>GetIndustryByRecordType</name>
             <extensionName>c:picklistValuesByRecordType</extensionName>
             <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>recTypeId</name>
-                <value>
-                    <elementReference>Get_Account.RecordTypeId</elementReference>
-                </value>
-            </inputParameters>
             <inputParameters>
                 <name>fieldApiName</name>
                 <value>
@@ -95,20 +110,82 @@
                     <stringValue>Account</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recTypeId</name>
+                <value>
+                    <elementReference>Get_Account.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>fieldLabel</name>
+                <value>
+                    <stringValue>Industry</stringValue>
+                </value>
+            </inputParameters>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <fields>
-            <name>displaySelection</name>
-            <fieldText>&lt;p&gt;Display this conditionally if  a value is selected. &lt;/p&gt;</fieldText>
+            <name>displayAgriculture</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Display this conditionally if industry is Agriculture.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>getIndustryPicklistValues.outputValue</leftValueReference>
+                    <leftValueReference>GetIndustryByRecordType.outputValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Agriculture</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayBanking</name>
+            <fieldText>&lt;p&gt;Display this conditionally if industry is Banking.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetIndustryByRecordType.outputValue</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Banking</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>displayElse</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Display this conditionally if industry anything but Banking or Agriculture&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetIndustryByRecordType.outputValue</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue/>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetIndustryByRecordType.outputValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Agriculture</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetIndustryByRecordType.outputValue</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Banking</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -131,7 +208,7 @@
         </fields>
         <fields>
             <name>displaySelectedIndustryValue_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;The value selected in the picklist is: &lt;/span&gt;&lt;b style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;{!getIndustryPicklistValues.outputValue}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;The value selected in the picklist is: {!GetIndustryByRecordType.outputValue}&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

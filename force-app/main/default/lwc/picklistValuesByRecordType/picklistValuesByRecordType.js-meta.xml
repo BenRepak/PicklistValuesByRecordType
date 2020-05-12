@@ -6,13 +6,15 @@
     <description>This component will display the values for the picklist of a specified record type.</description>
     <targets>
         <target>lightning__FlowScreen</target>
-        <target>lightning__RecordPage</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__FlowScreen">
-            <property name="fieldApiName" label="Field API Name" type="String" required="true" role="inputOnly" default="Industry"/>
-            <property name="objApiName" label="Object API Name" type="String" required="true" role="inputOnly" default="Account"/>
-            <property name="recTypeId" label="Record Type Id" type="String" required="true" role="inputOnly" default="insert recordTypeId here"/>
+            <property name="objApiName" label="Object API Name" type="String" required="true" role="inputOnly" default="unknown"/>
+            <property name="fieldApiName" label="Field API Name" type="String" required="true" role="inputOnly" default="unknown"/>
+            <property name="fieldLabel" label="Field Display Label" type="String" required="false" role="inputOnly" default="unknown"/>
+            <property name="recTypeId" label="Record Type Id" type="String" required="true" role="inputOnly" default=" e"/>
+            <property name="isRequired" label="Require Field" type="Boolean" required="true" role="inputOnly" default="false"/>
+            <property name="placeholder" label="Default Placeholder Text" type="String" required="false" role="inputOnly" description="If left blank, the default value is \'Select One\' "/>
             <property name="outputValue" label="Selected Picklist Value" type="String" role="outputOnly" description="In the flow, use automatically assigned variables in the conditions that need to be notified of the change."/>
         </targetConfig>
     </targetConfigs>

@@ -1,26 +1,14 @@
 <template>
-  <lightning-card title="Picklist Values based on Record Type">
-    <div if:true={options}>
-      <lightning-combobox
-        name="picklistSelection"
-        label={fieldApiName}
-        value={value}
-        placeholder="-Select-"
-        options={options}
-        onchange={handleChange}
-      ></lightning-combobox
-      ><br />
-
-      you selected the value: <b>{value}</b><br /><br />
-    </div>
-    <div>
-      <p>fieldApiName: {fieldApiName}</p>
-    </div>
-    <div>
-      <p>objApiName: {objApiName}</p>
-    </div>
-    <div>
-      <p>recTypeId: {recTypeId}</p>
-    </div>
-  </lightning-card>
+  <div if:true={options}>
+    <lightning-combobox
+      name="picklistSelection"
+      label={fieldLabel}
+      value={value}
+      placeholder={placeholder}
+      options={options}
+      onchange={handleChange}
+      required={isRequired}
+      class="match-flow-style"
+    ></lightning-combobox>
+  </div>
 </template>
