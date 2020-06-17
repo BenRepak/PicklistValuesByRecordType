@@ -44,6 +44,7 @@ export default class PicklistValuesByRecordType extends LightningElement {
   //https://developer.salesforce.com/docs/component-library/documentation/en/lwc/use_build_for_flow_screens
   @api
   validate() {
+    // known issue summer 20 https://success.salesforce.com/issues_view?id=a1p3A000001pXVmQAM
     // console.log("validate");
     // console.log("this.isRequired >>> " + this.isRequired);
     // console.log("this.outputValue >>> " + this.outputValue);
