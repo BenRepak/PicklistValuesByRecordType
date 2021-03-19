@@ -1,4 +1,8 @@
+/* 
+20210308 bjr removed due to updated full-width in SP21 release https://resources.docs.salesforce.com/230/latest/en-us/sfdc/pdf/salesforce_spring21_release_notes.pdf#rn_forcecom_flow_fbuilder_styling_screen_components
 .match-flow-style {
   max-width: 700px;
   padding-bottom: 24px;
-}
+  
+} */
+

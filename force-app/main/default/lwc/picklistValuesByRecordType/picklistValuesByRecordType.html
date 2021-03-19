@@ -1,14 +1,7 @@
 <template>
   <div if:true={options}>
-    <lightning-combobox
-      name="picklistSelection"
-      label={fieldLabel}
-      value={value}
-      placeholder={placeholder}
-      options={options}
-      onchange={handleChange}
-      required={isRequired}
-      class="match-flow-style"
-    ></lightning-combobox>
+    <lightning-combobox name="picklistSelection" label={fieldLabel} value={value} placeholder={placeholder}
+      options={options} onchange={handleChange} required={isRequired} class="slds-m-bottom_x-small">
+    </lightning-combobox>
   </div>
 </template>

@@ -4,6 +4,7 @@ import { FlowAttributeChangeEvent } from "lightning/flowSupport";
 
 export default class PicklistValuesByRecordType extends LightningElement {
   @track options;
+
   @track _value;
   @api fieldApiName;
   @api fieldLabel;
@@ -29,7 +30,10 @@ export default class PicklistValuesByRecordType extends LightningElement {
   handleChange(event) {
     console.log("changed6");
     this._value = event.target.value;
-    // console.log("this.value >>> " + this._value);
+    this.value = this._value;
+
+    //console.log("this._value >>> " + this._value);
+
     const attributeChangeEvent = new FlowAttributeChangeEvent(
       "outputValue",
       this._value
