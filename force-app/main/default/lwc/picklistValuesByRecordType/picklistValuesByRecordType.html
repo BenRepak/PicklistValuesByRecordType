@@ -1,7 +1,18 @@
 <template>
-  <div if:true={options}>
-    <lightning-combobox name="picklistSelection" label={fieldLabel} value={value} placeholder={placeholder}
-      options={options} onchange={handleChange} required={isRequired} class="slds-m-bottom_x-small">
-    </lightning-combobox>
+  <div class="slds-form-element">
+    <label class="slds-form-element__label" for="select-01">
+      <template if:true={isRequired}><abbr class="slds-required" title="required">* </abbr></template>
+      {fieldLabel}
+    </label>
+    <div class="slds-form-element__control">
+      <div class="slds-select_container">
+        <select class="slds-select" id="select-01" onchange={handleChange}>
+          <option value="">--{placeholder}--</option>
+          <template for:each={options} for:item="option">
+            <option key={option.label} value={option.value}>{option.value}</option>
+            </template>
+        </select>
+      </div>
+    </div>
   </div>
 </template>
